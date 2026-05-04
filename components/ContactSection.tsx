@@ -19,23 +19,34 @@ export default function ContactSection() {
   return (
     <section
       ref={ref}
+      id="contact"
       style={{
-        background: "linear-gradient(135deg, #5BB8E8 0%, #87CEEB 100%)",
+        position: "relative",
+        backgroundImage: "linear-gradient(rgba(255,255,255,0.32), rgba(255,255,255,0.32)), url(/img/bg.jpg)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
         padding: "96px 24px",
         textAlign: "center",
       }}
     >
-      <div style={{ maxWidth: "700px", margin: "0 auto" }}>
+      <div
+        style={{
+          width: "min(700px, calc(100% - 40px))",
+          margin: "0 auto",
+        }}
+      >
         {/* Heading */}
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           style={{
-            fontSize: "clamp(1.6rem, 4vw, 2.5rem)",
+            fontSize: "clamp(1.85rem, 6vw, 2.5rem)",
             fontWeight: 900,
             color: "#FFFFFF",
-            marginBottom: "40px",
+            lineHeight: 1.35,
+            marginBottom: "28px",
             textShadow: "0 2px 12px rgba(0,0,0,0.1)",
           }}
         >
@@ -51,8 +62,8 @@ export default function ContactSection() {
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "center",
-            gap: "24px",
-            marginBottom: "48px",
+            gap: "16px",
+            marginBottom: "34px",
           }}
         >
           {features.map((f, i) => {
@@ -65,11 +76,11 @@ export default function ContactSection() {
                   alignItems: "center",
                   gap: "10px",
                   color: "#FFFFFF",
-                  fontSize: "0.95rem",
+                  fontSize: "0.98rem",
                   fontWeight: 600,
                 }}
               >
-                <Icon size={20} color="#FFFFFF" />
+                <Icon size={20} color="#FFFFFF" style={{ flexShrink: 0 }} />
                 {f.text}
               </div>
             );
@@ -96,7 +107,6 @@ export default function ContactSection() {
               fontWeight: 800,
               fontSize: "1.05rem",
               textDecoration: "none",
-              background: "#FFFFFF",
               boxShadow: "0 4px 24px rgba(0,0,0,0.12)",
               transition: "transform 0.2s ease, box-shadow 0.2s ease",
             }}
@@ -117,7 +127,7 @@ export default function ContactSection() {
                 backgroundClip: "text",
               }}
             >
-              𝕏 Xで相談する
+              𝕏 で相談する
             </span>
           </a>
         </motion.div>
@@ -128,10 +138,9 @@ export default function ContactSection() {
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5, delay: 0.4 }}
           style={{
-            marginTop: "24px",
-            color: "#FFFFFF",
-            fontSize: "0.9rem",
-            opacity: 0.85,
+            marginTop: "22px",
+            color: "rgba(255,255,255,0.85)",
+            fontSize: "0.95rem",
           }}
         >
           @rgrrgr_sns にDMをお送りください

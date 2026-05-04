@@ -16,20 +16,24 @@ const fadeUp: Variants = {
 export default function HeroSection() {
   return (
     <section
+      id="top"
       style={{
-        background: "linear-gradient(135deg, #5BB8E8 0%, #87CEEB 100%)",
+        position: "relative",
+        backgroundImage: "linear-gradient(rgba(34,108,75,0.32), rgba(255,255,255,0.32)), url(/img/fv_img.jpg)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
         paddingTop: "120px",
         paddingBottom: "80px",
-        minHeight: "100vh",
+        minHeight: "100dvh",
         display: "flex",
         alignItems: "center",
       }}
     >
       <div
         style={{
-          maxWidth: "800px",
+          width: "min(800px, calc(100% - 40px))",
           margin: "0 auto",
-          padding: "0 24px",
           textAlign: "center",
         }}
       >
@@ -39,18 +43,20 @@ export default function HeroSection() {
           variants={fadeUp}
           initial="hidden"
           animate="visible"
-          style={{ marginBottom: "28px" }}
+          style={{ marginBottom: "22px" }}
         >
           <span
             style={{
-              display: "inline-block",
-              backgroundColor: "#FFFFFF",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "rgba(255,255,255,0.92)",
               borderRadius: "999px",
-              padding: "8px 20px",
-              fontSize: "0.8rem",
+              padding: "9px 16px",
+              fontSize: "0.82rem",
               fontWeight: 700,
-              background: "#FFFFFF",
-              letterSpacing: "0.05em",
+              letterSpacing: "0.04em",
+              boxShadow: "0 6px 18px rgba(0,0,0,0.06)",
             }}
           >
             <span
@@ -73,47 +79,29 @@ export default function HeroSection() {
           initial="hidden"
           animate="visible"
           style={{
-            fontSize: "clamp(1.8rem, 5vw, 3rem)",
+            fontSize: "clamp(2rem, 7vw, 3.25rem)",
             fontWeight: 900,
-            color: "#FFFFFF",
-            lineHeight: 1.3,
-            marginBottom: "24px",
-            textShadow: "0 2px 12px rgba(0,0,0,0.1)",
+            color: "#000000",
+            lineHeight: 1.28,
+            marginBottom: "18px",
+            letterSpacing: "-0.02em",
+            textShadow: "2px 2px 10px #ffffff, -2px 2px 10px #ffffff, 2px -2px 10px #ffffff, -2px -2px 10px #ffffff",
           }}
         >
           数字を作る、ブランドを磨く。<br />
           SNSマーケティングの最適解を。
         </motion.h1>
 
-        {/* Sub copy */}
-        <motion.p
-          custom={2}
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          style={{
-            fontSize: "clamp(0.9rem, 2.5vw, 1.1rem)",
-            color: "#FFFFFF",
-            lineHeight: 1.8,
-            marginBottom: "40px",
-            opacity: 0.92,
-          }}
-        >
-          アフィリエイト広告運用、事業主側でのマーケ責任者を経て、<br className="hidden sm:block" />
-          現在はSNSマーケティングと動画編集を軸に活動。<br className="hidden sm:block" />
-          戦略・クリエイティブ・分析まで一気通貫でサポートします。
-        </motion.p>
-
         {/* CTA Buttons */}
         <motion.div
-          custom={3}
+          custom={2}
           variants={fadeUp}
           initial="hidden"
           animate="visible"
           style={{
             display: "flex",
             flexWrap: "wrap",
-            gap: "16px",
+            gap: "12px",
             justifyContent: "center",
           }}
         >
@@ -124,7 +112,8 @@ export default function HeroSection() {
             style={{
               background: IG_GRADIENT,
               color: "#FFFFFF",
-              padding: "14px 32px",
+              minHeight: "52px",
+              padding: "14px 26px",
               borderRadius: "999px",
               fontWeight: 700,
               fontSize: "1rem",
@@ -136,7 +125,7 @@ export default function HeroSection() {
               transition: "opacity 0.2s ease, transform 0.2s ease",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.opacity = "0.85";
+              (e.currentTarget as HTMLAnchorElement).style.opacity = "0.88";
               (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px)";
             }}
             onMouseLeave={(e) => {
@@ -144,28 +133,33 @@ export default function HeroSection() {
               (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
             }}
           >
-            𝕏 Xで相談する
+            𝕏 で相談する
           </a>
 
           <a
             href="#services"
             style={{
-              border: "2px solid #FFFFFF",
+              border: "2px solid rgba(255,255,255,0.88)",
               color: "#FFFFFF",
-              padding: "14px 32px",
+              background: "rgba(255,255,255,0.2)",
+              minHeight: "52px",
+              padding: "14px 26px",
               borderRadius: "999px",
               fontWeight: 700,
               fontSize: "1rem",
               textDecoration: "none",
               display: "inline-flex",
               alignItems: "center",
-              transition: "background 0.2s ease, color 0.2s ease",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
+              transition: "background 0.2s ease, transform 0.2s ease",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "rgba(255,255,255,0.15)";
+              (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.15)";
+              (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "transparent";
+              (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.2)";
+              (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
             }}
           >
             サービスを見る ↓

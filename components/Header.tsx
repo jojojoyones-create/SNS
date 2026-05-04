@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const IG_GRADIENT = "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)";
 
@@ -25,7 +26,9 @@ export default function Header() {
         left: 0,
         right: 0,
         zIndex: 50,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: "rgba(255,255,255,0.96)",
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
         boxShadow: scrolled ? "0 2px 16px rgba(0,0,0,0.08)" : "none",
         transition: "box-shadow 0.3s ease",
       }}
@@ -39,22 +42,20 @@ export default function Header() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          gap: "12px",
         }}
       >
         {/* Logo */}
-        <span
-          style={{
-            fontSize: "1.75rem",
-            fontWeight: 900,
-            background: IG_GRADIENT,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-            letterSpacing: "0.05em",
-          }}
-        >
-          JON
-        </span>
+        <a href="#top" style={{ textDecoration: "none", display: "block" }}>
+          <Image
+            src="/img/logo_green.png"
+            alt="JON"
+            width={120}
+            height={40}
+            style={{ width: "auto", height: "36px", objectFit: "contain" }}
+            priority
+          />
+        </a>
 
         {/* CTA Button */}
         <a
@@ -64,26 +65,27 @@ export default function Header() {
           style={{
             background: IG_GRADIENT,
             color: "#FFFFFF",
-            padding: "10px 22px",
+            padding: "10px 18px",
             borderRadius: "999px",
             fontWeight: 700,
-            fontSize: "0.875rem",
+            fontSize: "0.88rem",
             textDecoration: "none",
             display: "inline-flex",
             alignItems: "center",
             gap: "6px",
+            whiteSpace: "nowrap",
             transition: "opacity 0.2s ease, transform 0.2s ease",
           }}
           onMouseEnter={(e) => {
             (e.currentTarget as HTMLAnchorElement).style.opacity = "0.85";
-            (e.currentTarget as HTMLAnchorElement).style.transform = "scale(1.03)";
+            (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px)";
           }}
           onMouseLeave={(e) => {
             (e.currentTarget as HTMLAnchorElement).style.opacity = "1";
-            (e.currentTarget as HTMLAnchorElement).style.transform = "scale(1)";
+            (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
           }}
         >
-          𝕏 Xで相談する
+          𝕏 で相談する
         </a>
       </div>
     </motion.header>
