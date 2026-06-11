@@ -1,24 +1,27 @@
 "use client";
 
 import { motion, useInView, type Variants } from "framer-motion";
-import { useRef } from "react";
-import { TrendingUp, ShieldCheck, Search } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
+import { BarChart2, ShieldCheck, TrendingUp } from "lucide-react";
 
 const IG_GRADIENT = "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)";
 
 const achievements = [
   {
-    icon: TrendingUp,
+    icon: BarChart2,
+    img: "/img/sloth_graph.png",
     title: "月間集客数 15,000〜20,000件達成",
     desc: "業界最多水準の集客実績。数値分析と継続的な改善により、クライアントのビジネス成長を力強くサポートします。",
   },
   {
     icon: ShieldCheck,
+    img: "/img/sloth_shield.png",
     title: "薬機法管理者資格保有",
     desc: "クリーンかつ高効率な広告運用を実現。法令遵守を徹底しながら、最大限の効果を引き出す運用設計が強みです。",
   },
   {
-    icon: Search,
+    icon: TrendingUp,
+    img: "/img/sloth_star.png",
     title: "ブランドイメージ回復",
     desc: "SEOネガティブキーワードの完全排除とブランドイメージ回復。長期的な視点で信頼性の高いブランドを構築します。",
   },
@@ -36,11 +39,19 @@ const cardVariants: Variants = {
 export default function ExperienceSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   return (
     <section
       ref={ref}
-      style={{ backgroundColor: "#F5E6D0", padding: "96px 24px" }}
+      style={{ backgroundColor: "#FFFFFF", padding: "96px 24px" }}
     >
       <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
         {/* Label */}
@@ -54,10 +65,7 @@ export default function ExperienceSection() {
             fontWeight: 700,
             letterSpacing: "0.15em",
             marginBottom: "12px",
-            background: IG_GRADIENT,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
+            color: "#e6683c",
           }}
         >
           EXPERIENCE &amp; ACHIEVEMENTS
@@ -83,7 +91,7 @@ export default function ExperienceSection() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(280px, 1fr))",
             gap: "24px",
           }}
         >
@@ -103,38 +111,56 @@ export default function ExperienceSection() {
                   padding: "32px",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "16px",
                 }}
               >
-                <div
-                  style={{
-                    width: "52px",
-                    height: "52px",
-                    borderRadius: "12px",
-                    backgroundColor: "rgba(196,135,58,0.15)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                  }}
-                >
-                  <Icon size={26} color="#C4873A" />
+                {/* Top row: icon+title (left) / illustration (right) */}
+                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                  {/* Left: icon box + title */}
+                  <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "12px" }}>
+                    <div
+                      style={{
+                        backgroundColor: "#FDF3E7",
+                        borderRadius: "12px",
+                        padding: "10px",
+                        width: "44px",
+                        height: "44px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                      }}
+                    >
+                      <Icon size={22} color="#E8894A" />
+                    </div>
+                    <h3
+                      style={{
+                        fontSize: "17px",
+                        fontWeight: 700,
+                        color: "#1a1a1a",
+                        lineHeight: 1.4,
+                        textAlign: "left",
+                      }}
+                    >
+                      {item.title}
+                    </h3>
+                  </div>
+                  {/* Right: illustration */}
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "80px", height: "80px", flexShrink: 0 }}>
+                    <img
+                      src={item.img}
+                      alt=""
+                      style={{ width: "80px", height: "80px", objectFit: "contain", flexShrink: 0 }}
+                    />
+                  </div>
                 </div>
-                <h3
-                  style={{
-                    fontSize: "1rem",
-                    fontWeight: 800,
-                    color: "#1a1a1a",
-                    lineHeight: 1.4,
-                  }}
-                >
-                  {item.title}
-                </h3>
+                {/* Description */}
                 <p
                   style={{
-                    fontSize: "0.9rem",
-                    color: "#333333",
-                    lineHeight: 1.7,
+                    fontSize: "14px",
+                    color: "#666666",
+                    lineHeight: 1.8,
+                    textAlign: "left",
+                    marginTop: "12px",
                   }}
                 >
                   {item.desc}

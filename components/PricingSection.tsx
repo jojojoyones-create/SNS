@@ -1,10 +1,11 @@
 "use client";
 
 import { motion, useInView, type Variants } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Check } from "lucide-react";
 
 const IG_GRADIENT = "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)";
+const GOLD_GRADIENT = "linear-gradient(45deg, #C4873A, #F0C060)";
 
 const plans = [
   {
@@ -12,7 +13,7 @@ const plans = [
     price: "¥50,000",
     period: "/月",
     badge: null,
-    highlight: false,
+    tier: "light" as const,
     note: "※動画制作なし・戦略/分析/指示書特化の入門プラン",
     features: [
       "SNS運用の月次戦略設計",
@@ -26,7 +27,7 @@ const plans = [
     price: "¥80,000",
     period: "/月",
     badge: "★ 一番人気",
-    highlight: true,
+    tier: "standard" as const,
     note: null,
     features: [
       "SNS運用の月次戦略設計",
@@ -43,7 +44,7 @@ const plans = [
     price: "¥120,000",
     period: "/月",
     badge: "💪 コスパ最強",
-    highlight: false,
+    tier: "full" as const,
     note: null,
     features: [
       "SNS運用の月次戦略設計",
@@ -73,11 +74,19 @@ const cardVariants: Variants = {
 export default function PricingSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   return (
     <section
       ref={ref}
-      style={{ backgroundColor: "#F5E6D0", padding: "96px 24px" }}
+      style={{ backgroundColor: "#F5E6D3", padding: "96px 24px" }}
     >
       <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
         {/* Label */}
@@ -90,15 +99,42 @@ export default function PricingSection() {
             fontSize: "0.75rem",
             fontWeight: 700,
             letterSpacing: "0.15em",
-            marginBottom: "12px",
-            background: IG_GRADIENT,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
+            marginBottom: "32px",
+            color: "#e6683c",
           }}
         >
           PRICING
         </motion.p>
+
+        {/* 吹き出しバッジ */}
+        <div style={{ textAlign: "center", marginBottom: "2px", marginTop: "0px", marginLeft: "-150px" }}>
+          <span
+            style={{
+              display: "inline-block",
+              backgroundColor: "#E8894A",
+              color: "#fff",
+              fontSize: "13px",
+              fontWeight: 700,
+              padding: "6px 14px",
+              borderRadius: "20px",
+              position: "relative",
+            }}
+          >
+            はじめやすい！
+          </span>
+          {/* 吹き出し尻尾（下向き三角） */}
+          <span
+            style={{
+              display: "block",
+              width: 0,
+              height: 0,
+              borderLeft: "8px solid transparent",
+              borderRight: "8px solid transparent",
+              borderTop: "8px solid #E8894A",
+              margin: "0 auto",
+            }}
+          />
+        </div>
 
         {/* Heading */}
         <motion.h2
@@ -113,7 +149,7 @@ export default function PricingSection() {
             marginBottom: "12px",
           }}
         >
-          料金プラン
+          3つの料金プラン
         </motion.h2>
 
         <motion.p
@@ -135,165 +171,199 @@ export default function PricingSection() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(280px, 1fr))",
             gap: "24px",
-            alignItems: "stretch",
+            alignItems: "start",
+            paddingTop: "48px",
+            paddingBottom: "12px",
           }}
         >
-          {plans.map((plan, i) => (
-            <motion.div
-              key={i}
-              custom={i}
-              variants={cardVariants}
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
-              style={{
-                backgroundColor: "#FFFFFF",
-                border: plan.highlight
-                  ? "2px solid transparent"
-                  : "1px solid #C4873A",
-                borderRadius: "20px",
-                padding: "36px 28px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "20px",
-                position: "relative",
-                backgroundClip: plan.highlight ? "padding-box" : undefined,
-                boxShadow: plan.highlight
-                  ? "0 0 0 2px #e6683c, 0 8px 32px rgba(230,104,60,0.18)"
-                  : "none",
-                transform: plan.highlight ? "scale(1.03)" : "scale(1)",
-              }}
-            >
-              {/* Badge */}
-              {plan.badge && (
-                <span
-                  style={{
-                    position: "absolute",
-                    top: "-14px",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    background: IG_GRADIENT,
-                    color: "#FFFFFF",
-                    fontSize: "0.8rem",
-                    fontWeight: 700,
-                    padding: "5px 16px",
-                    borderRadius: "999px",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {plan.badge}
-                </span>
-              )}
+          {[plans[2], plans[1], plans[0]].map((plan, i) => {
+            const isLight = plan.tier === "light";
+            const isStandard = plan.tier === "standard";
+            const isFull = plan.tier === "full";
 
-              {/* Plan name */}
-              <h3
+            return (
+              <motion.div
+                key={i}
+                custom={i}
+                variants={cardVariants}
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
                 style={{
-                  fontSize: "1.1rem",
-                  fontWeight: 800,
-                  color: "#1a1a1a",
-                  marginTop: plan.badge ? "8px" : "0",
-                }}
-              >
-                {plan.name}
-              </h3>
-
-              {/* Price */}
-              <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
-                <span
-                  style={{
-                    fontSize: "2.25rem",
-                    fontWeight: 900,
-                    color: "#1a1a1a",
-                  }}
-                >
-                  {plan.price}
-                </span>
-                <span
-                  style={{
-                    fontSize: "0.9rem",
-                    color: "#666666",
-                    fontWeight: 500,
-                  }}
-                >
-                  {plan.period}
-                </span>
-              </div>
-
-              {/* Features */}
-              <ul
-                style={{
-                  listStyle: "none",
+                  // ── ライトプラン ──
+                  ...(isLight && {
+                    backgroundColor: "#FFFFFF",
+                    border: "1px solid #C4873A",
+                    borderRadius: "20px",
+                    padding: "36px 28px",
+                    opacity: 1,
+                    boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
+                  }),
+                  // ── スタンダードプラン ──
+                  ...(isStandard && {
+                    background:
+                      "linear-gradient(#FFFFFF, #FFFFFF) padding-box, linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%) border-box",
+                    border: "3px solid transparent",
+                    borderRadius: "20px",
+                    padding: "44px 36px",
+                    transform: isMobile ? undefined : "translateY(-28px)",
+                    boxShadow: "0 20px 60px rgba(230,104,60,0.35)",
+                    position: "relative" as const,
+                    zIndex: 1,
+                    marginLeft: isMobile ? undefined : "-10px",
+                    marginRight: isMobile ? undefined : "-10px",
+                  }),
+                  // ── フル支援プラン ──
+                  ...(isFull && {
+                    backgroundColor: "#FFFFFF",
+                    border: "1px solid #C4873A",
+                    borderRadius: "20px",
+                    padding: "36px 28px",
+                    boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
+                  }),
                   display: "flex",
                   flexDirection: "column",
-                  gap: "10px",
-                  flexGrow: 1,
+                  gap: "20px",
+                  position: "relative",
                 }}
               >
-                {plan.features.map((f, j) => (
-                  <li
-                    key={j}
+                {/* Badge */}
+                {plan.badge && (
+                  <span
                     style={{
-                      display: "flex",
-                      alignItems: "flex-start",
-                      gap: "10px",
-                      fontSize: "0.875rem",
-                      color: "#333333",
+                      position: "absolute",
+                      top: "-14px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      background: isStandard ? IG_GRADIENT : GOLD_GRADIENT,
+                      color: "#FFFFFF",
+                      fontSize: "0.8rem",
+                      fontWeight: 700,
+                      padding: "5px 16px",
+                      borderRadius: "999px",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {plan.badge}
+                  </span>
+                )}
+
+                {/* Plan name */}
+                <h3
+                  style={{
+                    fontSize: "1.1rem",
+                    fontWeight: 800,
+                    color: "#1a1a1a",
+                    marginTop: plan.badge ? "8px" : "0",
+                    textAlign: "center",
+                  }}
+                >
+                  {plan.name}
+                </h3>
+
+                {/* Price */}
+                <div style={{ display: "flex", alignItems: "baseline", gap: "4px", justifyContent: "center" }}>
+                  <span
+                    style={{
+                      fontSize: "2.25rem",
+                      fontWeight: 900,
+                      color: "#1a1a1a",
+                    }}
+                  >
+                    {plan.price}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "0.9rem",
+                      color: "#666666",
+                      fontWeight: 500,
+                    }}
+                  >
+                    {plan.period}
+                  </span>
+                </div>
+
+                {/* Features */}
+                <ul
+                  style={{
+                    listStyle: "none",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "10px",
+                    flexGrow: 1,
+                  }}
+                >
+                  {plan.features.map((f, j) => (
+                    <li
+                      key={j}
+                      style={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: "10px",
+                        fontSize: "0.875rem",
+                        color: isLight ? "#555555" : "#333333",
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      <Check
+                        size={16}
+                        style={{
+                          color: isLight ? "#555555" : "#e6683c",
+                          flexShrink: 0,
+                          marginTop: "2px",
+                        }}
+                      />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Note */}
+                {plan.note && (
+                  <p
+                    style={{
+                      fontSize: "0.78rem",
+                      color: "#aaaaaa",
                       lineHeight: 1.5,
                     }}
                   >
-                    <Check
-                      size={16}
-                      style={{ color: "#e6683c", flexShrink: 0, marginTop: "2px" }}
-                    />
-                    {f}
-                  </li>
-                ))}
-              </ul>
+                    {plan.note}
+                  </p>
+                )}
 
-              {/* Note */}
-              {plan.note && (
-                <p
+                {/* CTA Button */}
+                <a
+                  href="https://x.com/rgrrgr_sns"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
-                    fontSize: "0.78rem",
-                    color: "#888888",
-                    lineHeight: 1.5,
+                    background: isLight ? "#ffffff" : IG_GRADIENT,
+                    color: isLight ? "#E8603C" : "#FFFFFF",
+                    border: isLight ? "2px solid #E8603C" : "none",
+                    padding: "13px 24px",
+                    borderRadius: "999px",
+                    fontWeight: 700,
+                    fontSize: "0.95rem",
+                    textDecoration: "none",
+                    textAlign: "center",
+                    display: "block",
+                    transition: "opacity 0.2s ease, transform 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLAnchorElement).style.opacity = "0.85";
+                    (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLAnchorElement).style.opacity = "1";
+                    (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
                   }}
                 >
-                  {plan.note}
-                </p>
-              )}
-
-              {/* CTA Button */}
-              <a
-                href="https://x.com/rgrrgr_sns"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  background: IG_GRADIENT,
-                  color: "#FFFFFF",
-                  padding: "13px 24px",
-                  borderRadius: "999px",
-                  fontWeight: 700,
-                  fontSize: "0.95rem",
-                  textDecoration: "none",
-                  textAlign: "center",
-                  display: "block",
-                  transition: "opacity 0.2s ease, transform 0.2s ease",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.opacity = "0.85";
-                  (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.opacity = "1";
-                  (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
-                }}
-              >
-                𝕏 Xで相談する
-              </a>
-            </motion.div>
-          ))}
+                  𝕏 で相談する
+                </a>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

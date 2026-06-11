@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
+import { useState, useEffect } from "react";
 
 const IG_GRADIENT = "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)";
 
@@ -14,18 +15,29 @@ const fadeUp: Variants = {
 };
 
 export default function HeroSection() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   return (
     <section
       id="top"
       style={{
         position: "relative",
-        backgroundImage: "linear-gradient(rgba(34,108,75,0.32), rgba(255,255,255,0.32)), url(/img/fv_img.jpg)",
+        backgroundImage: isMobile
+          ? "linear-gradient(rgba(34,108,75,0.32), rgba(255,255,255,0.32)), url(/img/fv_img_sp.png)"
+          : "linear-gradient(rgba(34,108,75,0.32), rgba(255,255,255,0.32)), url(/img/fv_img.png)",
         backgroundSize: "cover",
-        backgroundPosition: "center",
+        backgroundPosition: isMobile ? "top center" : "20% center",
         backgroundRepeat: "no-repeat",
-        paddingTop: "120px",
+        paddingTop: isMobile ? "180px" : "120px",
         paddingBottom: "80px",
-        minHeight: "100dvh",
+        minHeight: isMobile ? "100vh" : "100dvh",
         display: "flex",
         alignItems: "center",
       }}
@@ -35,6 +47,7 @@ export default function HeroSection() {
           width: "min(800px, calc(100% - 40px))",
           margin: "0 auto",
           textAlign: "center",
+          padding: "24px",
         }}
       >
         {/* Badge */}
@@ -79,13 +92,13 @@ export default function HeroSection() {
           initial="hidden"
           animate="visible"
           style={{
-            fontSize: "clamp(2rem, 7vw, 3.25rem)",
+            fontSize: isMobile ? "32px" : "48px",
             fontWeight: 900,
             color: "#000000",
-            lineHeight: 1.28,
+            lineHeight: isMobile ? 1.28 : 1.3,
             marginBottom: "18px",
             letterSpacing: "-0.02em",
-            textShadow: "2px 2px 10px #ffffff, -2px 2px 10px #ffffff, 2px -2px 10px #ffffff, -2px -2px 10px #ffffff",
+            textShadow: "0 2px 8px rgba(0,0,0,0.15)",
           }}
         >
           数字を作る、ブランドを磨く。<br />
@@ -113,10 +126,10 @@ export default function HeroSection() {
               background: IG_GRADIENT,
               color: "#FFFFFF",
               minHeight: "52px",
-              padding: "14px 26px",
+              padding: isMobile ? "14px 26px" : "16px 36px",
               borderRadius: "999px",
               fontWeight: 700,
-              fontSize: "1rem",
+              fontSize: isMobile ? "1rem" : "18px",
               textDecoration: "none",
               display: "inline-flex",
               alignItems: "center",
@@ -139,30 +152,34 @@ export default function HeroSection() {
           <a
             href="#services"
             style={{
-              border: "2px solid rgba(255,255,255,0.88)",
-              color: "#FFFFFF",
-              background: "rgba(255,255,255,0.2)",
+              background: "rgba(255,255,255,0.1)",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
+              border: "1.5px solid rgba(255,255,255,0.5)",
+              color: "#fff",
               minHeight: "52px",
-              padding: "14px 26px",
+              padding: isMobile ? "14px 26px" : "16px 36px",
               borderRadius: "999px",
               fontWeight: 700,
-              fontSize: "1rem",
+              fontSize: isMobile ? "1rem" : "18px",
               textDecoration: "none",
               display: "inline-flex",
               alignItems: "center",
               boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
-              transition: "background 0.2s ease, transform 0.2s ease",
+              transition: "opacity 0.2s ease, transform 0.2s ease",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.15)";
+              (e.currentTarget as HTMLAnchorElement).style.opacity = "0.85";
               (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.2)";
+              (e.currentTarget as HTMLAnchorElement).style.opacity = "1";
               (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
             }}
           >
-            サービスを見る ↓
+            <span style={{ color: "#E8603C" }}>
+              サービスを見る ↓
+            </span>
           </a>
         </motion.div>
       </div>
