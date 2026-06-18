@@ -95,7 +95,7 @@ export default function ContactSection() {
           transition={{ duration: 0.5, delay: 0.25 }}
         >
           <a
-            href="https://x.com/rgrrgr_sns"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSelj-xBas1aubCJ4FpY_O9Zp_bZdDloF8NqLWVP7YJy0A1tiQ/viewform?usp=publish-editor"
             target="_blank"
             rel="noopener noreferrer"
             style={{
