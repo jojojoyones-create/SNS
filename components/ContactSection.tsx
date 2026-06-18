@@ -42,7 +42,8 @@ export default function ContactSection() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           style={{
-            fontSize: "clamp(1.85rem, 6vw, 2.5rem)",
+            fontSize: "clamp(1.2rem, 4.5vw, 1.8rem)",
+            whiteSpace: "nowrap",
             fontWeight: 900,
             color: "#FFFFFF",
             lineHeight: 1.35,

@@ -63,12 +63,13 @@ export default function HeroSection() {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
+              whiteSpace: "nowrap",
               backgroundColor: "rgba(255,255,255,0.92)",
               borderRadius: "999px",
-              padding: "9px 16px",
-              fontSize: "0.82rem",
+              padding: "8px 14px",
+              fontSize: "0.68rem",
               fontWeight: 700,
-              letterSpacing: "0.04em",
+              letterSpacing: "0.03em",
               boxShadow: "0 6px 18px rgba(0,0,0,0.06)",
             }}
           >
