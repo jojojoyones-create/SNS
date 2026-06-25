@@ -357,7 +357,7 @@ export default function PricingSection() {
                     (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
                   }}
                 >
-                  𝕏 で相談する
+                  無料相談する
                 </a>
               </motion.div>
             );

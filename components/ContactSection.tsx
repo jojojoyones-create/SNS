@@ -128,7 +128,7 @@ export default function ContactSection() {
                 backgroundClip: "text",
               }}
             >
-              𝕏 で相談する
+              無料相談する
             </span>
           </a>
         </motion.div>
