@@ -7,9 +7,9 @@ import { MessageCircle, Clock, Send } from "lucide-react";
 const IG_GRADIENT = "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)";
 
 const features = [
-  { icon: MessageCircle, text: "まずは気軽にDMで相談OK" },
+  { icon: MessageCircle, text: "まずは気軽にフォームで無料相談" },
   { icon: Clock, text: "返信は基本24時間以内" },
-  { icon: Send, text: "X（旧Twitter）のDMでご連絡ください" },
+  { icon: Send, text: "フォームに答えるだけで完了です" },
 ];
 
 export default function ContactSection() {
@@ -140,11 +140,13 @@ export default function ContactSection() {
           transition={{ duration: 0.5, delay: 0.4 }}
           style={{
             marginTop: "22px",
-            color: "rgba(255,255,255,0.85)",
-            fontSize: "0.95rem",
+            color: "#ffffff",
+            fontSize: "15px",
+            fontWeight: 700,
+            textShadow: "0px 1px 6px rgba(0,0,0,0.8)",
           }}
         >
-          @rgrrgr_sns にDMをお送りください
+          所要時間：約1〜2分
         </motion.p>
       </div>
     </section>
