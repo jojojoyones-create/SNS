@@ -59,7 +59,7 @@ export default function Header() {
 
         {/* CTA Button */}
         <a
-          href="https://x.com/rgrrgr_sns"
+          href="https://docs.google.com/forms/d/1TAfGrv-OQQZ0baNI3bIyLJd1oqsThR0hurGB1qUd2Is/edit"
           target="_blank"
           rel="noopener noreferrer"
           style={{
