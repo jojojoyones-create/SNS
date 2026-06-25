@@ -120,7 +120,7 @@ export default function HeroSection() {
           }}
         >
           <a
-            href="https://docs.google.com/forms/d/1TAfGrv-OQQZ0baNI3bIyLJd1oqsThR0hurGB1qUd2Is/edit"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSelj-xBas1aubCJ4FpY_O9Zp_bZdDloF8NqLWVP7YJy0A1tiQ/viewform?usp=header"
             target="_blank"
             rel="noopener noreferrer"
             style={{
